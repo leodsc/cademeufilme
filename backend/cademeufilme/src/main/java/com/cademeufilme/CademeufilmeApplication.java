@@ -11,3 +11,13 @@ public class CademeufilmeApplication {
 	}
 
 }
+
+//@RestController
+//class Controller {
+//	@GetMapping("/")
+//	public ResponseEntity<String> getData() throws InterruptedException {
+//		Scraper netflix = new NetflixScraper();
+//		netflix.start();
+//		return ResponseEntity.ok().build();
+//	}
+//}
