@@ -1,3 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  outline: none;
+  list-style-type: none;
+  list-style-position: inside;
+  text-decoration: none;
+  text-transform: none;
+  font-family: "Inter", sans-serif;
+}
+
 .App {
   text-align: center;
 }

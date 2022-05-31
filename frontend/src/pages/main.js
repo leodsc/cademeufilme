@@ -2,7 +2,40 @@ import { useEffect, useState } from "react";
 import { Search } from "../components/header/search";
 import { Link } from "react-router-dom";
 import { IMG_URL } from "../util/movieDbApi";
-import "../scss/index.scss";
+import styled from "styled-components";
+import { flex } from "../styles/mixins";
+
+const PageWrapper = styled.main`
+  width: 100%;
+`;
+
+const MovieNotFound = styled.h2`
+  color: red;
+`;
+
+const MoviesWrapper = styled.section`
+  width: 100%;
+  ${flex("column", "center", "center", 0)};
+`;
+
+const Movie = styled.article`
+  color: #212121;
+  width: 100%;
+  max-width: 340px;
+  background-color: white;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+`;
 
 export function Main() {
   const [movieNotFound, setMovieNotFound] = useState(false);
@@ -16,36 +49,30 @@ export function Main() {
   }, [movies]);
 
   return (
-    <main className="page">
+    <PageWrapper>
       <Search
         changeState={{ setMovies, setQuery, setMovieNotFound }}
         states={{ query }}
       />
-      <div className="page__movies-ctn">
+      <MoviesWrapper>
         {movieNotFound && (
-          <h2>
+          <MovieNotFound>
             Nenhum filme com o nome <span>{query}</span> foi encontrado
-          </h2>
+          </MovieNotFound>
         )}
         {movies.map((movie) => {
           return (
             <Link to={"movie/" + movie.id}>
-              <div className="movie">
-                <h1 className="movie__title">{movie.title}</h1>
-                <img
-                  className="movie__image"
-                  src={IMG_URL + movie.poster_path}
-                  alt="movie poster"
-                />
-                <p className="movie__description">{movie.overview}</p>
-              </div>
+              <Movie>
+                <h1>{movie.title}</h1>
+                <img src={IMG_URL + movie.poster_path} alt="movie poster" />
+                <p>{movie.overview.slice(0, 150)}...</p>
+              </Movie>
             </Link>
           );
         })}
-        {movies.length > 10 && (
-          <button className="show-more-btn">Mostrar mais</button>
-        )}
-      </div>
-    </main>
+        {movies.length > 10 && <button>Mostrar mais</button>}
+      </MoviesWrapper>
+    </PageWrapper>
   );
 }
